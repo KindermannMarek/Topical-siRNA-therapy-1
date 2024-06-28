@@ -1,7 +1,6 @@
-**Source data, statistical code and outputs**
+** Topical siRNA Therapy of Diabetic-Like Wound Healing: Source data, statistical code and outputs**
 
 
-title: "Topical siRNA therapy of diabetic-like wound healing"  
 author: "Eva Neuhoferova & Marek Kindermann et al"  
 date: "2024-28-06"  
 description: "Functional and biocompatible wound dressing developed to enable a controlled release of a traceable vector loaded with the antisense siRNA against MMP-9 in the wound" 
