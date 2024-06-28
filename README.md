@@ -1,4 +1,3 @@
-**Header**    
 title: "Topical siRNA therapy of diabetic-like wound healing"  
 author: "Eva Neuhoferova & Marek Kindermann et al"  
 date: "2024-28-06"  
