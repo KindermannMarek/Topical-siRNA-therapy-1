@@ -1,4 +1,5 @@
-**source data, statistical code and outputs**
+**Source data, statistical code and outputs**
+
 
 title: "Topical siRNA therapy of diabetic-like wound healing"  
 author: "Eva Neuhoferova & Marek Kindermann et al"  
