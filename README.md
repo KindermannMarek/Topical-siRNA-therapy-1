@@ -1,10 +1,10 @@
-*Header*
+**Header**    
 title: "Topical siRNA therapy of diabetic-like wound healing"  
 author: "Eva Neuhoferova & Marek Kindermann et al"  
 date: "2024-28-06"  
 description: "Functional and biocompatible wound dressing developed to enable a controlled release of a traceable vector loaded with the antisense siRNA against MMP-9 in the wound" 
 
-*List of files in repo:*
+**List of files in repo:**  
 "Figure_2A.txt"  
 "Figure_2B.txt"  
 "Figure_3A.txt"  
@@ -13,7 +13,7 @@ description: "Functional and biocompatible wound dressing developed to enable a 
 "Figure_4D.Rmd"  
 "Figure_4D.html"  
 
-*File description:*
+**File description:**  
 file_name:   "Figure_2A.txt"  
 file_type:   "source data"  
 input files: ""  
@@ -25,7 +25,7 @@ column 4:    "x2: correlation time τ (us)"
 column 5:    "y2: g(2)(τ) − 1"  
 column 6:    "sd2: standard deviations over three single measurements from separately prepared samples"  
 
-*File description:*
+**File description:**  
 file_name:   "Figure_2B.txt"  
 file_type:   "source data"  
 input files: ""  
@@ -33,7 +33,7 @@ description: "fibre diameter quantification"
 column 1:    "x1: fiber diameter (nm); side #2 of the NF{Cop+-FND:siRNA}"  
 column 2:    "x2: fiber diameter (nm); side #2 of the NF"  
 
-*File description:*
+**File description:**  
 file_name:   "Figure_3A.txt"  
 file_type:   "source data"  
 input files: ""  
@@ -43,7 +43,7 @@ column 2:    "time: time (hours)"
 column 3:    "release: relative release"  
 column 4:    "sd: standard deviations over replicates"  
 
-*File description:*
+**File description:**  
 file_name:   "Figure_3C.txt"  
 file_type:   "source data"  
 input files: ""  
@@ -53,7 +53,7 @@ column 2:    "cond: presence of cells
 column 3:    "A_diff: Absorbance (A490 - A630)"  
 column 4:    "sd: standard deviations over replicates"  
 
-*File description:*
+**File description:**  
 file_name:   "Figure_4.txt"  
 file_type:   "source data"  
 input files: ""  
@@ -67,19 +67,19 @@ column 6:    "status: healthy animals (healthy); Streptozotocin treated animals 
 column 7:    "treat: experimental treatment"  
 column 8:    "treat: name of experimental treatment"  
 
-*File description:*
+**File description:**  
 file_name:   "Figure_4D.Rmd"  
 file_type:   "full computer code; R Markdown document"  
 input files: "Figure_4.txt"  
 description: "statistical analysis: Weibull regression model in a Bayesian framework using software packages in R"   
 
-*File description:*
+**File description:**  
 file_name:   "Figure_4D.html"  
 file_type:   "statistical analysis report"  
 input files: "Figure_4D.Rmd"; "Figure_4.txt"  
 description: "statistical analysis: Weibull regression model in a Bayesian framework using software packages in R"   
 
-*File description:*
+**File description:**  
 file_name:   ""  
 file_type:   ""  
 input files: ""  
