@@ -28,8 +28,8 @@ column 6:    "sd2: standard deviations over three single measurements from separ
 file_name:   "Figure_2B.txt"  
 file_type:   "source data"  
 input files: ""  
-description: "fibre diameter quantification"   
-column 1:    "x1: fiber diameter (nm); side #2 of the NF{Cop+-FND:siRNA}"  
+description: "fiber diameter quantification"   
+column 1:    "x1: fiber diameter (nm); side #2 of the NF_CopFNDsiRNA"  
 column 2:    "x2: fiber diameter (nm); side #2 of the NF"  
 
 **File description:**  
