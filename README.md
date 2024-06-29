@@ -1,10 +1,24 @@
 **Topical siRNA Therapy of Diabetic-Like Wound Healing: Source data, statistical code and outputs**
-
+<br>
+<br>
+This repository contains the source data for a scientific article:   
 
 title: "Topical siRNA Therapy of Diabetic-Like Wound Healing"  
 author: "Eva Neuhoferova & Marek Kindermann et al"  
 date: "2024-28-06"  
 description: "Functional and biocompatible wound dressing developed to enable a controlled release of a traceable vector loaded with the antisense siRNA against MMP-9 in the wound" 
+
+**File description:**  
+file_name:   "Figure_4D.Rmd"  
+file_type:   "full computer code; R Markdown document"  
+input files: "Figure_4.txt"  
+description: "statistical analysis: Weibull regression model in a Bayesian framework using software packages in R"   
+
+**File description:**  
+file_name:   "Figure_4D.html"  
+file_type:   "statistical analysis report"  
+input files: "Figure_4D.Rmd"; "Figure_4.txt"  
+description: "statistical analysis: Weibull regression model in a Bayesian framework using software packages in R"   
 
 **File description:**  
 file_name:   "Figure_2A.txt"  
@@ -59,18 +73,6 @@ column 5:    "day_of_scar_formation: time to the formation of the primary scar (
 column 6:    "status: healthy animals (healthy); Streptozotocin treated animals (diabetic)"  
 column 7:    "treat: experimental treatment"  
 column 8:    "treat: name of experimental treatment"  
-
-**File description:**  
-file_name:   "Figure_4D.Rmd"  
-file_type:   "full computer code; R Markdown document"  
-input files: "Figure_4.txt"  
-description: "statistical analysis: Weibull regression model in a Bayesian framework using software packages in R"   
-
-**File description:**  
-file_name:   "Figure_4D.html"  
-file_type:   "statistical analysis report"  
-input files: "Figure_4D.Rmd"; "Figure_4.txt"  
-description: "statistical analysis: Weibull regression model in a Bayesian framework using software packages in R"   
 
 **File description:**  
 file_name:   ""  
