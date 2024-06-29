@@ -38,7 +38,7 @@ column 2:    "glyc_pre: blood glucose level (mM); experimental day 0"
 column 3:    "glyc_post: blood glucose level (mM); experimental day 19"  
 column 4:    "diff: diff = glyc_post - glyc_pre (mM)"  
 column 5:    "day_of_scar_formation: time to the formation of the primary scar (days)"  
-column 6:    "status: healthy animals (healthy); Streptozotocin treated animals (diabetic)"  
+column 6:    "status: healthy animals ("healthy"); Streptozotocin treated animals ("diabetic")"  
 column 7:    "treat: experimental treatment"  
 column 8:    "censoring_status: for survival analysis"  
 column 9:    "treat: name of experimental treatment"  
@@ -95,15 +95,25 @@ column 2:    "cond: presence of cells
 column 3:    "A_diff: Absorbance (A490 - A630)"  
 column 4:    "sd: standard deviations over replicates"  
 
-
+**File description:**  
+file_name:   "Figure_5A.txt"  
+file_type:   "source data"  
+input files: ""  
+description: "expression of MMP-9 mRNA in tissues "   
+column 1:    "sample: name of experimental treatment"  
+column 2:    "status: healthy animals ("healthy"); Streptozotocin treated animals ("diabetic")"  
+column 3:    "tissue: tissues before treatment, experimental day 22 ("before"); scar tissues, experimental days 35–42 ("scar")"  
+column 4:    "fold: fold-change in gene expression (2^-ddCt)" 
+column 5:    "sd: standard deviations over replicates" 
 
 **File description:**  
-file_name:   ""  
-file_type:   ""  
+file_name:   "Figure_5B.txt"  
+file_type:   "source data"  
 input files: ""  
-description: ""   
-column 1:    ""  
-column 2:    ""  
-column 3:    ""  
+description: "level of the MMP-9 protein in excised tissues"   
+column 1:    "tissue: tissues after 7 days of treatment, experimental day 29 ("wound"); after scar formation (“scar”)"  
+column 2:    "treat: applied treatment"  
+column 3:    "signal: densitometric signal from Western blot"  
+
 
 
