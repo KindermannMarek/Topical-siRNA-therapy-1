@@ -73,6 +73,18 @@ column 2:    "time: time (hours)"
 column 3:    "release: relative release"  
 column 4:    "sd: standard deviations over replicates"  
 
+**File description:**    
+file_name:   "Figure_3B.txt"    
+file_type:   "source data"  
+input files: ""  
+description: "in vitro inhibition of MMP-9 mRNA expression "   
+column 1:    "sample: name of experimental treatment"  
+column 2:    "time: outcome measured 144 h post-treatment"  
+column 3:    "tech_rep: technical replicate"  
+column 4:    "rep: biological replicate"  
+column 5:    "gene: monitored gene"  
+column 6:    "ct: qPCR Ct values"  
+
 **File description:**  
 file_name:   "Figure_3C.txt"  
 file_type:   "source data"  
@@ -82,6 +94,8 @@ column 1:    "sample: measured sample "
 column 2:    "cond: presence of cells  
 column 3:    "A_diff: Absorbance (A490 - A630)"  
 column 4:    "sd: standard deviations over replicates"  
+
+
 
 **File description:**  
 file_name:   ""  
