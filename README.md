@@ -3,7 +3,7 @@
 <br>  
 <br>  
 
-*This repository contains the source data for a scientific article:*   
+*This repository contains the source data for the scientific article:*   
 
 
 article title: "Topical siRNA Therapy of Diabetic-Like Wound Healing"  
