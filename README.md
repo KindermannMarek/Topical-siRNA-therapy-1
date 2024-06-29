@@ -40,7 +40,7 @@ column 4:    "diff: diff = glyc_post - glyc_pre (mM)"
 column 5:    "day_of_scar_formation: time to the formation of the primary scar (days)"  
 column 6:    "status: healthy animals (healthy); Streptozotocin treated animals (diabetic)"  
 column 7:    "treat: experimental treatment"  
-column 8:    "censoring_status: for survival analysis"
+column 8:    "censoring_status: for survival analysis"  
 column 9:    "treat: name of experimental treatment"  
 
 **File description:**  
