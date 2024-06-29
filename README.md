@@ -103,7 +103,7 @@ description: "expression of MMP-9 mRNA in tissues "
 column 1:    "sample: name of experimental treatment"  
 column 2:    "status: healthy animals ("healthy"); Streptozotocin treated animals ("diabetic")"  
 column 3:    "tissue: tissues before treatment, experimental day 22 ("before"); scar tissues, experimental days 35–42 ("scar")"  
-column 4:    "fold: fold-change in gene expression (2^-ddCt)" 
+column 4:    "fold: fold-change in gene expression (2^-ddCt)"  
 column 5:    "sd: standard deviations over replicates" 
 
 **File description:**  
