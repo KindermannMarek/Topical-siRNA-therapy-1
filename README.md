@@ -18,13 +18,13 @@ description: "Functional and biocompatible wound dressing developed to enable a 
 
 **File description:**  
 file_name:   "Figure_4D.Rmd"  
-file_type:   "full computer code; R Markdown document"  
+file_type:   "commented computer code; R Markdown document"  
 input files: "Figure_4.txt"  
 description: "statistical analysis: Weibull regression model in a Bayesian framework using software packages in R"   
 
 **File description:**  
 file_name:   "Figure_4D.html"  
-file_type:   "statistical analysis report"  
+file_type:   "commented analysis report"  
 input files: "Figure_4D.Rmd"; "Figure_4.txt"  
 description: "statistical analysis: Weibull regression model in a Bayesian framework using software packages in R"   
 
