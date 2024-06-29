@@ -29,6 +29,21 @@ input files: "Figure_4D.Rmd"; "Figure_4.txt"
 description: "statistical analysis: Weibull regression model in a Bayesian framework using software packages in R"   
 
 **File description:**  
+file_name:   "Figure_4.txt"  
+file_type:   "source data"  
+input files: ""  
+description: "time to the formation of the primary scar; blood glucose level"   
+column 1:    "group_ID: group of animals"  
+column 2:    "glyc_pre: blood glucose level (mM); experimental day 0"  
+column 3:    "glyc_post: blood glucose level (mM); experimental day 19"  
+column 4:    "diff: diff = glyc_post - glyc_pre (mM)"  
+column 5:    "day_of_scar_formation: time to the formation of the primary scar (days)"  
+column 6:    "status: healthy animals (healthy); Streptozotocin treated animals (diabetic)"  
+column 7:    "treat: experimental treatment"  
+column 8:    "censoring_status: for survival analysis"
+column 9:    "treat: name of experimental treatment"  
+
+**File description:**  
 file_name:   "Figure_2A.txt"  
 file_type:   "source data"  
 input files: ""  
@@ -67,20 +82,6 @@ column 1:    "sample: measured sample "
 column 2:    "cond: presence of cells  
 column 3:    "A_diff: Absorbance (A490 - A630)"  
 column 4:    "sd: standard deviations over replicates"  
-
-**File description:**  
-file_name:   "Figure_4.txt"  
-file_type:   "source data"  
-input files: ""  
-description: "time to the formation of the primary scar; blood glucose level"   
-column 1:    "group_ID: group of animals"  
-column 2:    "glyc_pre: blood glucose level (mM); experimental day 0"  
-column 3:    "glyc_post: blood glucose level (mM); experimental day 19"  
-column 4:    "diff: diff = glyc_post - glyc_pre (mM)"  
-column 5:    "day_of_scar_formation: time to the formation of the primary scar (days)"  
-column 6:    "status: healthy animals (healthy); Streptozotocin treated animals (diabetic)"  
-column 7:    "treat: experimental treatment"  
-column 8:    "treat: name of experimental treatment"  
 
 **File description:**  
 file_name:   ""  
