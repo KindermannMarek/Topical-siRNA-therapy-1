@@ -1,0 +1,16 @@
+group_ID	glyc_pre	glyc_post	diff	day_of_scar_formation	status	treat	censoring_status	treat_name
+1	8.4	8.7	0.3	13	healthy	C	1	helthy_control
+1	7.7	19.3	11.6	14	diabetic	B	1	NF_CopFNDsiRNA
+1	5.2	19.1	13.9	19	diabetic	A	1	diabetic_control
+1	6.7	20.3	13.6	19	diabetic	D	1	NF
+1	6.8	16.4	9.6	20	diabetic	E	1	NF_CopFNDctrlRNA
+2	6.4	5.6	-0.8	13	healthy	C	1	helthy_control
+2	7.8	14.5	6.7	14	diabetic	B	1	NF_CopFNDsiRNA
+2	8.4	10.7	2.3	20	diabetic	A	1	diabetic_control
+2	6.5	10.7	4.2	19	diabetic	D	1	NF
+2	5.9	9.4	3.5	20	diabetic	E	1	NF_CopFNDctrlRNA
+3	7.8	8.3	0.5	12	healthy	C	1	helthy_control
+3	6.8	23.2	16.4	13	diabetic	B	1	NF_CopFNDsiRNA
+3	7.2	22.8	15.6	19	diabetic	A	1	diabetic_control
+3	7.6	22.4	14.8	19	diabetic	D	1	NF
+3	6.2	21.6	15.4	19	diabetic	E	1	NF_CopFNDctrlRNA

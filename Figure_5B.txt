@@ -1,0 +1,6 @@
+tissue	treat	signal
+scar	no_treatment	8.145
+wound	no_treatment	11.719
+scar	no_treatment	18.992
+wound	NF_CopFNDsiRNA	8.142
+scar	NF_CopFNDsiRNA	14.794

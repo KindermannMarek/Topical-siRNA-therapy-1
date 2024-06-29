@@ -1,0 +1,9 @@
+sample	cond	A_diff	sd
+Reagent_mixture	no_cells	0.00753	5.77E-05
+1% FCS	no_cells	0.19027	0.00723
+NF	no_cells	0.19023	0.00645
+NF_CopFNDsiRNA	no_cells	0.17837	0.01987
+Lysis_buffer	cells	0.7623	0.02011
+1% FCS	cells	0.4151	0.03383
+NF	cells	0.36817	0.00893
+NF_CopFNDsiRNA	cells	0.3395	0.02203

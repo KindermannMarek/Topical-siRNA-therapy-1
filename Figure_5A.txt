@@ -1,0 +1,11 @@
+sample	status	tissue	fold	sd
+healthy control	healthy	before	1	0.07744
+healthy control	healthy	scar	0.88021	0.042
+untreated control	diabetic	before	1.13718	0.021
+untreated control	diabetic	scar	0.88104	0.039
+NF	diabetic	before	0.99054	0.008
+NF	diabetic	scar	1.02121	0.015
+NF_CopFNDctrlRNA	diabetic	before	1.03108	0.028
+NF_CopFNDctrlRNA	diabetic	scar	0.80673	0.003
+NF_CopFNDsiRNA	diabetic	before	0.76433	0.131
+NF_CopFNDsiRNA	diabetic	scar	0.34869	0.013
