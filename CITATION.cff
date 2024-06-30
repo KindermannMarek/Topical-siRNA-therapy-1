@@ -1,12 +1,12 @@
 cff-version: 1.0.0
 message: "Please cite it as below."
 authors:
-- family-names: "Kindermann"
-  given-names: "Marek"
-  orcid: "https://orcid.org/0009-0002-2074-7833"
 - family-names: "Neuhoferova"
   given-names: "Eva"
   orcid: "https://orcid.org/0000-0000-0000-0000"
+- family-names: "Kindermann"
+  given-names: "Marek"
+  orcid: "https://orcid.org/0009-0002-2074-7833"
 - family-names: "Buzgo"
   given-names: "Matej"
   orcid: "https://orcid.org/0000-0000-0000-0000"
