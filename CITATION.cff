@@ -1,0 +1,11 @@
+@dataset{marek_kindermann_2024_12593880,
+  author       = {Marek Kindermann},
+  title        = {{KindermannMarek/Topical-siRNA-therapy-1: Source 
+                   data}},
+  month        = jun,
+  year         = 2024,
+  publisher    = {Zenodo},
+  version      = {v2.1},
+  doi          = {10.5281/zenodo.12588170},
+  url          = {https://doi.org/10.5281/zenodo.12588170}
+}
