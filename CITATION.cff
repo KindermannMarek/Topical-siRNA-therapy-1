@@ -1,11 +1,29 @@
-@dataset{marek_kindermann_2024_12593880,
-  author       = {Marek Kindermann},
-  title        = {{KindermannMarek/Topical-siRNA-therapy-1: Source 
-                   data}},
-  month        = jun,
-  year         = 2024,
-  publisher    = {Zenodo},
-  version      = {v2.1},
-  doi          = {10.5281/zenodo.12588170},
-  url          = {https://doi.org/10.5281/zenodo.12588170}
-}
+cff-version: 1.0.0
+message: "Please cite it as below."
+authors:
+- family-names: "Kindermann"
+  given-names: "Marek"
+  orcid: "https://orcid.org/0009-0002-2074-7833"
+- family-names: "Neuhoferova"
+  given-names: "Eva"
+  orcid: "https://orcid.org/0000-0000-0000-0000"
+- family-names: "Buzgo"
+  given-names: "Matej"
+  orcid: "https://orcid.org/0000-0000-0000-0000"
+- family-names: "Vocetkova"
+  given-names: "Karolina"
+  orcid: "https://orcid.org/0000-0000-0000-0000"
+- family-names: "Panek"
+  given-names: "Dalibor"
+  orcid: "https://orcid.org/0000-0000-0000-0000"
+- family-names: "Cigler"
+  given-names: "Petr"
+  orcid: "https://orcid.org/0000-0000-0000-0000"
+- family-names: "Benson"
+  given-names: "Veronika"
+  orcid: "https://orcid.org/0000-0000-0000-0000"
+title: "Topical-siRNA-therapy-1: Source data "
+version: 2.2.0
+doi: 10.5281/zenodo.12588170
+date-released: 2024-06-30
+url: "https://github.com/KindermannMarek/Topical-siRNA-therapy-1"
