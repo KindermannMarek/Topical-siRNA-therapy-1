@@ -5,7 +5,8 @@
 <be>  
 
 *Notes:*  
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.12588170.svg)](https://zenodo.org/doi/10.5281/zenodo.12588170) - DOI represents ALL repository release available on Zenodo  
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.12588170.svg)](https://zenodo.org/doi/10.5281/zenodo.12588170) - DOI represents ALL repository releases available on Zenodo  
 [![DOI](https://zenodo.org/badge/821582276.svg)](https://zenodo.org/doi/10.5281/zenodo.12588170) - DOI represents the latest repository release available on Zenodo  
 
 
