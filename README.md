@@ -1,17 +1,14 @@
 **Topical siRNA Therapy of Diabetic-Like Wound Healing: Source data, statistical code and outputs**  
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.12588170.svg)](https://zenodo.org/doi/10.5281/zenodo.12588170)
 
-<br>  
-<be>  
+<br>   
 
 *Notes:*  
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.12588170.svg)](https://zenodo.org/doi/10.5281/zenodo.12588170) - DOI represents ALL repository releases available on Zenodo  
 [![DOI](https://zenodo.org/badge/821582276.svg)](https://zenodo.org/doi/10.5281/zenodo.12588170) - DOI represents the latest repository release available on Zenodo  
 
-
-<br>  
-<br>  
+<br>   
 
 *This repository contains the source data for the scientific article:*   
 
@@ -21,7 +18,6 @@ author: "Eva Neuhoferova & Marek Kindermann et al"
 date: "2024-28-06"  
 description: "Functional and biocompatible wound dressing developed to enable a controlled release of a traceable vector loaded with the antisense siRNA against MMP-9 in the wound" 
 
-<br>  
 <br>  
 
 *Available source data:*    
