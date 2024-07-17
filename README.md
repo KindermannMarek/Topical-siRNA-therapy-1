@@ -1,4 +1,4 @@
-**Topical siRNA Therapy of Diabetic-Like Wound Healing: Source data, statistical code and outputs**  
+**Topical siRNA Therapy of Diabetic-Like Wound Healing: Source data, scripts and outputs**  
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.12588170.svg)](https://zenodo.org/doi/10.5281/zenodo.12588170)
 
 <br>   
@@ -23,33 +23,6 @@ description: "Functional and biocompatible wound dressing developed to enable a 
 *Available source data:*    
 
 **File description:**  
-file_name:   "Figure_4D.Rmd"  
-file_type:   "commented computer code; R Markdown document"  
-input files: "Figure_4.txt"  
-description: "statistical analysis: Weibull regression model in a Bayesian framework using software packages in R"   
-
-**File description:**  
-file_name:   "Figure_4D.html"  
-file_type:   "commented analysis report"  
-input files: "Figure_4D.Rmd"; "Figure_4.txt"  
-description: "statistical analysis: Weibull regression model in a Bayesian framework using software packages in R"   
-
-**File description:**  
-file_name:   "Figure_4.txt"  
-file_type:   "source data"  
-input files: ""  
-description: "time to the formation of the primary scar; blood glucose level"   
-column 1:    "group_ID: group of animals"  
-column 2:    "glyc_pre: blood glucose level (mM); experimental day 0"  
-column 3:    "glyc_post: blood glucose level (mM); experimental day 19"  
-column 4:    "diff: diff = glyc_post - glyc_pre (mM)"  
-column 5:    "day_of_scar_formation: time to the formation of the primary scar (days)"  
-column 6:    "status: healthy animals ("healthy"); Streptozotocin treated animals ("diabetic")"  
-column 7:    "treat: experimental treatment"  
-column 8:    "censoring_status: for survival analysis"  
-column 9:    "treat: name of experimental treatment"  
-
-**File description:**  
 file_name:   "Figure_2A.txt"  
 file_type:   "source data"  
 input files: ""  
@@ -68,6 +41,48 @@ input files: ""
 description: "fiber diameter quantification"   
 column 1:    "x1: fiber diameter (nm); side #2 of the NF_CopFNDsiRNA"  
 column 2:    "x2: fiber diameter (nm); side #2 of the NF"  
+
+**File description:**  
+file_name: "Figure_2D.csv"  
+file_type: "source data"  
+input files: ""  
+description: "Time-correlated single photon counting histograms of recorded photons during 10s spot-measurement. Width of a single TCSPC channel is 16 ps."   
+column 1: "Histogram recorded from NF, side 2"  
+column 2: "Histogram recorded from NF, side 1"  
+column 3: "Histogram recorded from NF{Cop+-FND:siRNA}, side 2"  
+column 3: "Histogram recorded from NF{Cop+-FND:siRNA}, side 1"  
+
+**File description:**   
+file_name: "Figure_2D_inset.csv"  
+file_type: "source data"  
+input files: ""  
+description: "Intensity traces from point measurements"  
+column 1: "Time in seconds"  
+column 2: "Intensity in kHz, i.e., detected photons per second /1000, spot-measurement from NF"  
+column 3: "Time in seconds"  
+column 4: "Intensity in kHz, i.e., detected photons per second /1000, spot-measurement from NF{Cop+-FND:siRNA}"  
+
+**File description:**  
+file_name: "Figure_2D.m"  
+file_type: "MATLAB script"  
+input files: "Figure_2D.csv; Figure_2D_inset.csv"  
+description: "MATLAB script plots data shown in Figure_2D"  
+
+**File description:**  
+file_name: "Figure_2E.csv"  
+file_type: "source data"  
+input files: ""  
+description: "Phasor coordinates of lifetime data"  
+row 1: "Name of the original raw data file (excluding extension .ptu)"  
+row 2: "G-coordinates of the phasor data"  
+row 3: "S-coordinates of the phasor data"  
+row 4: "Intensity in arbitrary units, not used in the plot"  
+
+**File description:**  
+file_name: "Figure_2E.m"  
+file_type: "MATLAB script"  
+input files: "Figure_2E.csv"  
+description: "Matlab script plots phasor data shown in Figure_2E"  
 
 **File description:**  
 file_name:   "Figure_3A.txt"  
@@ -99,7 +114,34 @@ description: "cell cytotoxicity; LDH assay"
 column 1:    "sample: measured sample "  
 column 2:    "cond: presence of cells  
 column 3:    "A_diff: Absorbance (A490 - A630)"  
-column 4:    "sd: standard deviations over replicates"  
+column 4:    "sd: standard deviations over replicates"
+
+**File description:**  
+file_name:   "Figure_4.txt"  
+file_type:   "source data"  
+input files: ""  
+description: "time to the formation of the primary scar; blood glucose level"   
+column 1:    "group_ID: group of animals"  
+column 2:    "glyc_pre: blood glucose level (mM); experimental day 0"  
+column 3:    "glyc_post: blood glucose level (mM); experimental day 19"  
+column 4:    "diff: diff = glyc_post - glyc_pre (mM)"  
+column 5:    "day_of_scar_formation: time to the formation of the primary scar (days)"  
+column 6:    "status: healthy animals ("healthy"); Streptozotocin treated animals ("diabetic")"  
+column 7:    "treat: experimental treatment"  
+column 8:    "censoring_status: for survival analysis"  
+column 9:    "treat: name of experimental treatment"  
+
+**File description:**  
+file_name:   "Figure_4D.Rmd"  
+file_type:   "commented computer code; R Markdown document"  
+input files: "Figure_4.txt"  
+description: "statistical analysis: Weibull regression model in a Bayesian framework using software packages in R"   
+
+**File description:**  
+file_name:   "Figure_4D.html"  
+file_type:   "commented analysis report"  
+input files: "Figure_4D.Rmd"; "Figure_4.txt"  
+description: "statistical analysis: Weibull regression model in a Bayesian framework using software packages in R"   
 
 **File description:**  
 file_name:   "Figure_5A.txt"  
@@ -165,46 +207,5 @@ file_type:   "Western blot image"
 input files: ""  
 description: "Western blot - original image"  
 
-**File description:**  
-file_name: "phasor.csv"  
-file_type: "source data"  
-input files: ""  
-description: "Phasor coordinates of lifetime data"  
-row 1: "Name of the original raw data file (excluding extension .ptu)"  
-row 2: "G-coordinates of the phasor data"  
-row 3: "S-coordinates of the phasor data"  
-row 4: "Intensity in arbitrary units, not used in the plot"  
-
-**File description:**   
-file_name: "intensity.csv"  
-file_type: "source data"  
-input files: ""  
-description: "Intensity traces from point measurements"  
-column 1: "Time in seconds"  
-column 2: "Intensity in kHz, i.e., detected photons per second /1000, spot-measurement from NF"  
-column 3: "Time in seconds"  
-column 4: "Intensity in kHz, i.e., detected photons per second /1000, spot-measurement from NF{Cop+-FND:siRNA}"  
-
-**File description:**  
-file_name: "TCSPC.csv"  
-file_type: "source data"  
-input files: ""  
-description: "Time-correlated single photon counting histograms of recorded photons during 10s spot-measurement. Width of a single TCSPC channel is 16 ps."   
-column 1: "Histogram recorded from NF, side 2"  
-column 2: "Histogram recorded from NF, side 1"  
-column 3: "Histogram recorded from NF{Cop+-FND:siRNA}, side 2"  
-column 3: "Histogram recorded from NF{Cop+-FND:siRNA}, side 1"  
-
-**File description:**  
-file_name: "plot_traces.m"  
-file_type: "MATLAB script"  
-input files: "intensity.csv; TCSPC.csv"  
-description: "MATLAB script plots data shown in fig. 2 (D)"  
-
-**File description:**  
-file_name: "plot_phasor.m"  
-file_type: "MATLAB script"  
-input files: "phasor.csv"  
-description: "Matlab script plots phasor data shown in fig. 2 (E)"  
 
 
