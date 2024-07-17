@@ -159,9 +159,52 @@ file_type:   "Western blot image"
 input files: ""  
 description: "Western blot - original image"   
 
-
 **File description:**  
 file_name:   "Figure_5C_S4_fullGAPDH_2.tiff"  
 file_type:   "Western blot image"  
 input files: ""  
-description: "Western blot - original image"   
+description: "Western blot - original image"  
+
+**File description:**  
+file_name: "phasor.csv"  
+file_type: "source data"  
+input files: ""  
+description: "Phasor coordinates of lifetime data"  
+row 1: "Name of the original raw data file (excluding extension .ptu)"  
+row 2: "G-coordinates of the phasor data"  
+row 3: "S-coordinates of the phasor data"  
+row 4: "Intensity in arbitrary units, not used in the plot"  
+
+**File description:**   
+file_name: "intensity.csv"  
+file_type: "source data"  
+input files: ""  
+description: "Intensity traces from point measurements"  
+column 1: "Time in seconds"  
+column 2: "Intensity in kHz, i.e., detected photons per second /1000, spot-measurement from NF"  
+column 3: "Time in seconds"  
+column 4: "Intensity in kHz, i.e., detected photons per second /1000, spot-measurement from NF{Cop+-FND:siRNA}"  
+
+**File description:**  
+file_name: "TCSPC.csv"  
+file_type: "source data"  
+input files: ""  
+description: "Time-correlated single photon counting histograms of recorded photons during 10s spot-measurement. Width of a single TCSPC channel is 16 ps."   
+column 1: "Histogram recorded from NF, side 2"  
+column 2: "Histogram recorded from NF, side 1"  
+column 3: "Histogram recorded from NF{Cop+-FND:siRNA}, side 2"  
+column 3: "Histogram recorded from NF{Cop+-FND:siRNA}, side 1"  
+
+**File description:**  
+file_name: "plot_traces.m"  
+file_type: "MATLAB script"  
+input files: "intensity.csv; TCSPC.csv"  
+description: "MATLAB script plots data shown in fig. 2 (D)"  
+
+**File description:**  
+file_name: "plot_phasor.m"  
+file_type: "MATLAB script"  
+input files: "phasor.csv"  
+description: "Matlab script plots phasor data shown in fig. 2 (E)"  
+
+
