@@ -122,8 +122,8 @@ column 2:    "treat: applied treatment"
 column 3:    "signal: densitometric signal from Western blot"  
 
 **File description:**  
-file_name:   "Figure_5C_S4.txt"  
-file_type:   "image description"  
+file_name:   "Figure_5C_S4_fullMMP9_1.tiff"  
+file_type:   "Western blot image"  
 input files: ""  
 description: "Western blot - full gel - description of bands on gel"   
 0:           "protein ladder"      
@@ -137,4 +137,31 @@ description: "Western blot - full gel - description of bands on gel"
 8:           "wound -> NF"  
 9:           "scar -> NF"  
 
+**File description:**  
+file_name:   "Figure_5C_S4_fullGAPDH_1.tiff"  
+file_type:   "Western blot image"  
+input files: ""  
+description: "Western blot - full gel - description of bands on gel"   
+0:           "protein ladder"      
+1:           "scar -> healthy control"    
+2:           "wound -> NF{Cop+-FND:siRNA}"    
+3:           "scar -> NF{Cop+-FND:siRNA}"  
+4:           "wound -> diabetic control"  
+5:           "scar -> diabetic control"  
+6:           "wound -> NF{Cop+-FND:ctrlRNA}"    
+7:           "scar -> NF{Cop+-FND:ctrlRNA}"  
+8:           "wound -> NF"  
+9:           "scar -> NF" 
 
+**File description:**  
+file_name:   "Figure_5C_S4_fullMMP9_2.tiff"  
+file_type:   "Western blot image"  
+input files: ""  
+description: "Western blot - original image"   
+
+
+**File description:**  
+file_name:   "Figure_5C_S4_fullGAPDH_2.tiff"  
+file_type:   "Western blot image"  
+input files: ""  
+description: "Western blot - original image"   
