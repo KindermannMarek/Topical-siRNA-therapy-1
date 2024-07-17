@@ -121,5 +121,20 @@ column 1:    "tissue: tissues after 7 days of treatment, experimental day 29 ("w
 column 2:    "treat: applied treatment"  
 column 3:    "signal: densitometric signal from Western blot"  
 
+**File description:**  
+file_name:   "Figure_5C_S4.txt"  
+file_type:   "image description"  
+input files: ""  
+description: "Western blot - full gel - description of bands on gel"   
+0:           "protein ladder"      
+1:           "scar -> healthy control"    
+2:           "wound -> NF{Cop+-FND:siRNA}"    
+3:           "scar -> NF{Cop+-FND:siRNA}"  
+4:           "wound -> diabetic control"  
+5:           "scar -> diabetic control"  
+6:           "wound -> NF{Cop+-FND:ctrlRNA}"    
+7:           "scar -> NF{Cop+-FND:ctrlRNA}"  
+8:           "wound -> NF"  
+9:           "scar -> NF"  
 
 
