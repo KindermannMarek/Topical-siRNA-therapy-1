@@ -1,4 +1,4 @@
-**Topical siRNA Therapy of Diabetic-Like Wound Healing: Source data, scripts and outputs**  
+**Topical siRNA Therapy of Diabetic-Like Wound Healing: repository**  
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.12588170.svg)](https://zenodo.org/doi/10.5281/zenodo.12588170)
 
 <br>   
