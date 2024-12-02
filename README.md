@@ -23,7 +23,7 @@ description: "Functional and biocompatible wound dressing developed to enable a 
 *Available source data:*    
 
 **File description:**  
-file_name:   "Figure_2A.txt"  
+file_name:   "Figure_3A.txt"  
 file_type:   "source data"  
 input files: ""  
 description: "DLS intensity size distribution; DLS intensity autocorrelation function"   
@@ -35,7 +35,7 @@ column 5:    "y2: g(2)(τ) − 1"
 column 6:    "sd2: standard deviations over three single measurements from separately prepared samples"  
 
 **File description:**  
-file_name:   "Figure_2B.txt"  
+file_name:   "Figure_3B.txt"  
 file_type:   "source data"  
 input files: ""  
 description: "fiber diameter quantification"   
@@ -43,7 +43,7 @@ column 1:    "x1: fiber diameter (nm); side #2 of the NF_CopFNDsiRNA"
 column 2:    "x2: fiber diameter (nm); side #2 of the NF"  
 
 **File description:**  
-file_name: "Figure_2D.csv"  
+file_name: "Figure_3D.csv"  
 file_type: "source data"  
 input files: ""  
 description: "Time-correlated single photon counting histograms of recorded photons during 10s spot-measurement. Width of a single TCSPC channel is 16 ps."   
@@ -53,7 +53,7 @@ column 3: "Histogram recorded from NF{Cop+-FND:siRNA}, side 2"
 column 3: "Histogram recorded from NF{Cop+-FND:siRNA}, side 1"  
 
 **File description:**   
-file_name: "Figure_2D_inset.csv"  
+file_name: "Figure_3D_inset.csv"  
 file_type: "source data"  
 input files: ""  
 description: "Intensity traces from point measurements"  
@@ -63,13 +63,13 @@ column 3: "Time in seconds"
 column 4: "Intensity in kHz, i.e., detected photons per second /1000, spot-measurement from NF{Cop+-FND:siRNA}"  
 
 **File description:**  
-file_name: "Figure_2D.m"  
+file_name: "Figure_3D.m"  
 file_type: "MATLAB script"  
-input files: "Figure_2D.csv; Figure_2D_inset.csv"  
-description: "MATLAB script plots data shown in Figure_2D"  
+input files: "Figure_3D.csv; Figure_3D_inset.csv"  
+description: "MATLAB script plots data shown in Figure_3D"  
 
 **File description:**  
-file_name: "Figure_2E.csv"  
+file_name: "Figure_3E.csv"  
 file_type: "source data"  
 input files: ""  
 description: "Phasor coordinates of lifetime data"  
@@ -79,13 +79,13 @@ row 3: "S-coordinates of the phasor data"
 row 4: "Intensity in arbitrary units, not used in the plot"  
 
 **File description:**  
-file_name: "Figure_2E.m"  
+file_name: "Figure_3E.m"  
 file_type: "MATLAB script"  
-input files: "Figure_2E.csv"  
-description: "Matlab script plots phasor data shown in Figure_2E"  
+input files: "Figure_3E.csv"  
+description: "Matlab script plots phasor data shown in Figure_3E"  
 
 **File description:**  
-file_name:   "Figure_3A.txt"  
+file_name:   "Figure_4A.txt"  
 file_type:   "source data"  
 input files: ""  
 description: "time-dependent release of from the nanofiber mesh under physiological-like conditions"   
@@ -95,7 +95,7 @@ column 3:    "release: relative release"
 column 4:    "sd: standard deviations over replicates"  
 
 **File description:**    
-file_name:   "Figure_3B.txt"    
+file_name:   "Figure_4B.txt"    
 file_type:   "source data"  
 input files: ""  
 description: "in vitro inhibition of MMP-9 mRNA expression "   
@@ -107,7 +107,7 @@ column 5:    "gene: monitored gene"
 column 6:    "ct: qPCR Ct values"  
 
 **File description:**  
-file_name:   "Figure_3C.txt"  
+file_name:   "Figure_4C.txt"  
 file_type:   "source data"  
 input files: ""  
 description: "cell cytotoxicity; LDH assay"  
@@ -117,7 +117,7 @@ column 3:    "A_diff: Absorbance (A490 - A630)"
 column 4:    "sd: standard deviations over replicates"
 
 **File description:**  
-file_name:   "Figure_4.txt"  
+file_name:   "Figure_5.txt"  
 file_type:   "source data"  
 input files: ""  
 description: "time to the formation of the primary scar; blood glucose level"   
@@ -132,19 +132,19 @@ column 8:    "censoring_status: for survival analysis"
 column 9:    "treat: name of experimental treatment"  
 
 **File description:**  
-file_name:   "Figure_4D.Rmd"  
+file_name:   "Figure_5D.Rmd"  
 file_type:   "commented computer code; R Markdown document"  
-input files: "Figure_4.txt"  
+input files: "Figure_5.txt"  
 description: "statistical analysis: Weibull regression model in a Bayesian framework using software packages in R"   
 
 **File description:**  
-file_name:   "Figure_4D.html"  
+file_name:   "Figure_5D.html"  
 file_type:   "commented analysis report"  
-input files: "Figure_4D.Rmd"; "Figure_4.txt"  
+input files: "Figure_5D.Rmd"; "Figure_5.txt"  
 description: "statistical analysis: Weibull regression model in a Bayesian framework using software packages in R"   
 
 **File description:**  
-file_name:   "Figure_5A.txt"  
+file_name:   "Figure_6A.txt"  
 file_type:   "source data"  
 input files: ""  
 description: "expression of MMP-9 mRNA in tissues "   
@@ -155,7 +155,7 @@ column 4:    "fold: fold-change in gene expression (2^-ddCt)"
 column 5:    "sd: standard deviations over replicates" 
 
 **File description:**  
-file_name:   "Figure_5B.txt"  
+file_name:   "Figure_6B.txt"  
 file_type:   "source data"  
 input files: ""  
 description: "level of the MMP-9 protein in excised tissues"   
@@ -164,7 +164,7 @@ column 2:    "treat: applied treatment"
 column 3:    "signal: densitometric signal from Western blot"  
 
 **File description:**  
-file_name:   "Figure_5C_S4_fullMMP9_1.tiff"  
+file_name:   "Figure_6C_S9_fullMMP9_1.tiff"  
 file_type:   "Western blot image"  
 input files: ""  
 description: "Western blot - full gel - description of bands on gel"   
@@ -180,7 +180,7 @@ description: "Western blot - full gel - description of bands on gel"
 9:           "scar -> NF"  
 
 **File description:**  
-file_name:   "Figure_5C_S4_fullGAPDH_1.tiff"  
+file_name:   "Figure_6C_S8_fullGAPDH_1.tiff"  
 file_type:   "Western blot image"  
 input files: ""  
 description: "Western blot - full gel - description of bands on gel"   
@@ -196,13 +196,13 @@ description: "Western blot - full gel - description of bands on gel"
 9:           "scar -> NF" 
 
 **File description:**  
-file_name:   "Figure_5C_S4_fullMMP9_2.tiff"  
+file_name:   "Figure_6C_S9_fullMMP9_2.tiff"  
 file_type:   "Western blot image"  
 input files: ""  
 description: "Western blot - original image"   
 
 **File description:**  
-file_name:   "Figure_5C_S4_fullGAPDH_2.tiff"  
+file_name:   "Figure_6C_S8_fullGAPDH_2.tiff"  
 file_type:   "Western blot image"  
 input files: ""  
 description: "Western blot - original image"  
