@@ -23,6 +23,14 @@ description: "Functional and biocompatible wound dressing developed to enable a 
 *Available source data:*    
 
 **File description:**  
+file_name:   "Figure_2BC.csv"  
+file_type:   "source data"  
+input files: ""  
+description: "DLS intensity size distributions"   
+column:    "XIntensity: hydrodynamic diameter (nm)"  
+column:    "water / 10xpbs / fcs: DLS intensity (%)"  
+
+**File description:**  
 file_name:   "Figure_3A.txt"  
 file_type:   "source data"  
 input files: ""  
