@@ -23,6 +23,18 @@ description: "Functional and biocompatible wound dressing developed to enable a 
 *Available source data:*    
 
 **File description:**  
+file_name:   "Data_analysis_R.Rmd"  
+file_type:   "commented computer code; R Markdown document"  
+input files: "Figure_5.txt; "Figure_4B.txt"  
+description: "statistical analysis"   
+
+**File description:**  
+file_name:   "Data_analysis_R.html"  
+file_type:   "commented analysis report including computer code and results"  
+input files: "Data_analysis_R.Rmd"; "Figure_5.txt"; "Figure_4B.txt"   
+description: "statistical analysis"
+
+**File description:**  
 file_name:   "Figure_2BC.csv"  
 file_type:   "source data"  
 input files: ""  
@@ -137,19 +149,7 @@ column 6:    "status: healthy animals ("healthy"); Streptozotocin treated animal
 column 7:    "treat: experimental treatment"  
 column 8:    "censoring_status: for survival analysis"  
 column 9:    "treat: name of experimental treatment"  
-
-**File description:**  
-file_name:   "Figure_5D.Rmd"  
-file_type:   "commented computer code; R Markdown document"  
-input files: "Figure_5.txt"  
-description: "statistical analysis"   
-
-**File description:**  
-file_name:   "Figure_5D.html"  
-file_type:   "commented analysis report including computer code and results"  
-input files: "Figure_5D.Rmd"; "Figure_5.txt"  
-description: "statistical analysis"   
-
+   
 **File description:**  
 file_name:   "Figure_6A.txt"  
 file_type:   "source data"  
