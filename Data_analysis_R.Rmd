@@ -1,0 +1,1206 @@
+---
+title: "Topical siRNA therapy of diabetic-like wound healing"
+author: "Eva Neuhoferova & Marek Kindermann et al"
+date: '2024-06-28'
+output: html_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{=html}
+<style>
+body {
+text-align: justify}
+</style>
+```
+
+### Introduction
+
+\large
+
+This report shows source data, statistical code and outputs of
+*regression models* in a *Bayesian framework*.
+
+Specifically, analysis for Figure 5A, B, C, D and Figure 3B is shown.
+
+All analyses were done using [R sofware](https://www.r-project.org/) in
+[RStudio](https://www.rstudio.com/) interface.
+
+<br>
+
+### Software version
+
+```{r}
+### Clear R environment:
+rm(list=ls())
+R.version
+rstudioapi::versionInfo()$version
+```
+
+### Libraries
+
+```{r warning=FALSE, message=FALSE, errors=FALSE}
+### Uploading R packages:
+library(here)            # file referencing
+library(dplyr)           # for data manipulation
+library(ggplot2)         # plot data
+library(brms)            # Bayesian model fit
+library(bayesplot)       # plot posterior distributions
+library(loo)             # leave-one-out cross-validation
+library(tidyr)           # data manipulation
+library(tibble)          # related to tidyr
+library(ggdist)          # plot posterior: stat_halfeye(), stat_slab()
+library(wesanderson)     # set posterior palette: wes_palette()
+library(marginaleffects) # get the final effect size
+```
+
+```{r}
+### Uploading R packages:
+citation("here")            # file referencing
+citation("dplyr")           # for data manipulation
+citation("ggplot2")         # plot data
+citation("brms")            # Bayesian model fit
+citation("bayesplot")       # plot posterior distributions
+citation("loo")             # leave-one-out cross-validation
+citation("tidyr")           # data manipulation
+citation("tibble")          # related to tidyr
+citation("ggdist")          # plot posterior: stat_halfeye(), stat_slab()
+citation("wesanderson")     # set posterior palette: wes_palette()
+citation("marginaleffects") # get the final effect size
+```
+
+### WOUND HEALING - Figure 5A, B and D
+
+The regression model is applied to the time-to-event data, which are
+shown in *Figure 5A, B* in the manuscript. The resulting effect size is
+shown in *Figure 5D* utilizing full posterior distributions.
+
+The *Weibull model* allows us to assume a monotonically increasing
+hazard function *h_W (t)*. In other words, the chance of wound closure
+increases with time. Results of the Weibull regression model in *Figure
+5A-B* (smooth curves) are shown in terms of the survival function
+*S_W(t)*, which describes the probability that wound closure has not
+occurred by the elapsed time.
+
+For the definitions of *h_W (t)* and *S_W (t)* see the manuscript. For a
+complete discussion of statistical analysis, see the *Supporting
+Information*, section *Statistical analysis*.
+
+I found the text from Solomon Kurz as extremely helpful - see chapter
+11.5 in "Statistical rethinking with brms, ggplot2, and the tidyverse:
+Second edition version 0.4.0; A Solomon Kurz; 2023-01-26; Bonus:
+Survival analysis". (<https://bookdown.org/content/4857/>)
+
+### Load data:
+
+File *Figure_5.txt* from the GitHub repository contains the source data
+(see link <https://github.com/KindermannMarek/Topical-siRNA-therapy-1>).
+
+*treat*, *group_id*, *status* should be coded as **factors**\
+*day_of_scar_formation*, *censoring_status* are **numerical variables**
+
+```{r message=FALSE}
+### Load data
+rm(list=ls())
+### Upload (!Use your own path to the data table! Load file *Figure_5.txt* from the repository.)
+file.exists("c:/Users/KindermannM/Documents/OneDrive_hotmail_gmail/4_biomedical_center/R2/1_uochb/Projects/HPMA_patent/data/Figure_4.txt")
+### Upload (!Use your own path to the data table! Load file *Figure_5.txt* from the repository.)
+data <- read.delim("c:/Users/KindermannM/Documents/OneDrive_hotmail_gmail/4_biomedical_center/R2/1_uochb/Projects/HPMA_patent/data/Figure_4.txt")
+attach(data)
+
+treat <- as.factor(treat)
+group_ID <- as.factor(group_ID)
+status <- as.factor(status)
+day_of_scar_formation <- as.numeric(day_of_scar_formation)
+censoring_status <- as.numeric(censoring_status)
+
+data
+```
+
+### BM1
+
+The weakly informative priors for the coefficients *𝛽* are centered
+around 0, reflecting the conservative assumption that the difference
+between the reference treatment and the others can be positive, negative
+or equal to zero. Standard deviation (sd) of this prior was estimated as
+sd = 2 × standard deviation(day_of_scar_formation); prior(normal(0, 6)).
+
+See section *Statistical analysis* in manuscript for the formal model
+notation.
+
+```{r message=FALSE, warning=FALSE, cache=TRUE}
+### Bayesian model
+set.seed = 17
+
+data$treat <- as.factor(data$treat)
+data$treat  <- relevel(data$treat, ref = "A")
+
+bform_1 <- bf(day_of_scar_formation ~ 1 + treat)
+prior_1 <- c(prior(normal(0, 6), class = b))
+
+fit_1 <- brm(bform_1,
+            data = data,
+            family = brmsfamily("weibull"),
+            prior = prior_1,
+            warmup = 2000,
+            iter = 5000,
+            chains = 4,
+            cores = 4,
+            control = list(adapt_delta = 0.95, max_treedepth = 15))
+            fit_1 <- add_criterion(fit_1, "loo")
+```
+
+### BM1.3
+
+Try to include the grouping variable *group_ID* to improve the model.
+
+```{r}
+### Bayesian model
+set.seed = 17
+
+data$treat <- as.factor(data$treat)
+data$treat  <- relevel(data$treat, ref = "A")
+
+bform_1.3 <- bf(day_of_scar_formation ~ 1 + treat + (1 | group_ID))
+prior_1.3 <- c(prior(normal(0, 2), class = b))
+
+fit_1.3 <- brm(bform_1.3,
+            data = data,
+            family = brmsfamily("weibull"),
+            prior = prior_1.3,
+            warmup = 2000,
+            iter = 5000,
+            chains = 4,
+            cores = 4,
+            control = list(adapt_delta = 0.95, max_treedepth = 15))
+            fit_1.3 <- add_criterion(fit_1.3, "loo")
+```
+
+The model diagnostic revealed 204 divergent transitions after warmup.
+Therefore, we utilize BM1 for the final analysis.
+
+```{r}
+###  Summary of a fitted model 
+summary(fit_1)
+
+### Display conditional effects
+conditional_effects(fit_1) 
+
+### Distribution of outcome vs. newly simulated data distribution
+### (dark line should be close to light lines)
+pp_check(fit_1, ndraws = 50)
+
+### Bayesian version of R-squared for regression model
+bayes_R2(fit_1)
+
+### "Leave-one-out extreme value diagnostic"
+loo(fit_1, 'moment_match = TRUE')
+plot(loo(fit_1, 'moment_match = TRUE'))
+
+### Trace rank plot: these histograms should be reasonable uniform, with no
+### chain spiking above or below the others.
+mcmc_rank_overlay(fit_1) 
+
+### Check whether the priors were informative: 
+### Is the posterior standard deviation greater than 10% of the prior 
+### standard deviation?
+bayestestR::check_prior(fit_1)
+
+```
+
+
+### BM1.1
+
+Prior sensitivity analysis for BM1: Try to check the more narrower
+prior.
+
+```{r message=FALSE, warning=FALSE, cache=TRUE}
+### Bayesian model
+set.seed = 17
+bform_1.1 <- bf(day_of_scar_formation ~ 1 + treat)
+prior_1.1 <- c(prior(normal(0, 1), class = b))
+
+fit_1.1 <- brm(bform_1.1,
+            data = data,
+            family = brmsfamily("weibull"),
+            prior = prior_1.1,
+            warmup = 2000,
+            iter = 5000,
+            chains = 4,
+            cores = 4,
+            control = list(adapt_delta = 0.95, max_treedepth = 15))
+            fit_1.1 <- add_criterion(fit_1.1, "loo")
+```
+
+```{r}
+###  Summary of a fitted model 
+summary(fit_1.1)
+
+### Display conditional effects
+conditional_effects(fit_1.1) 
+
+### Distribution of outcome vs. newly simulated data distribution
+### (dark line should be close to light lines)
+pp_check(fit_1.1, ndraws = 50)
+
+### Bayesian version of R-squared for regression model
+bayes_R2(fit_1.1)
+
+### "Leave-one-out extreme value diagnostic"
+loo(fit_1.1, 'moment_match = TRUE')
+plot(loo(fit_1.1, 'moment_match = TRUE'))
+
+### Trace rank plot: these histograms should be reasonable uniform, with no
+### chain spiking above or below the others.
+mcmc_rank_overlay(fit_1.1) 
+
+### Check whether the priors were informative: 
+### Is the posterior standard deviation greater than 10% of the prior 
+### standard deviation?
+bayestestR::check_prior(fit_1.1)
+```
+
+### BM1.2
+
+Prior sensitivity analysis for BM1: Try to check the more wider prior.
+
+```{r message=FALSE, warning=FALSE, cache=TRUE}
+### Bayesian model
+set.seed = 17
+bform_1.2 <- bf(day_of_scar_formation ~ 1 + treat)
+prior_1.2 <- c(prior(normal(0, 12), class = b))
+
+fit_1.2 <- brm(bform_1.2,
+            data = data,
+            family = brmsfamily("weibull"),
+            prior = prior_1.2,
+            warmup = 2000,
+            iter = 5000,
+            chains = 4,
+            cores = 4,
+            control = list(adapt_delta = 0.95, max_treedepth = 15))
+            fit_1.2 <- add_criterion(fit_1.2, "loo")
+```
+
+Both sensitivity analysis seem to be fine (there is no substantial
+change in the estimated parameters). The results are consistent with the
+proposed priors.
+
+```{r }
+###  Summary of a fitted model 
+summary(fit_1.2)
+
+### Display conditional effects
+conditional_effects(fit_1.2) 
+
+### Distribution of outcome vs. newly simulated data distribution
+### (dark line should be close to light lines)
+pp_check(fit_1.2, ndraws = 50)
+
+### Bayesian version of R-squared for regression model
+bayes_R2(fit_1.2)
+
+### "Leave-one-out extreme value diagnostic"
+loo(fit_1.2, 'moment_match = TRUE')
+plot(loo(fit_1.2, 'moment_match = TRUE'))
+
+### Trace rank plot: these histograms should be reasonable uniform, with no
+### chain spiking above or below the others.
+mcmc_rank_overlay(fit_1.2) 
+
+### Check whether the priors were informative: 
+### Is the posterior standard deviation greater than 10% of the prior 
+### standard deviation?
+bayestestR::check_prior(fit_1.2)
+```
+
+### BM1 - Get survival and hazard function
+
+```{r message=FALSE, warning=FALSE}
+### See chapter 11.5 in Statistical rethinking with brms, ggplot2, and the 
+### tidyverse: Second edition version 0.4.0 
+### A Solomon Kurz; 2023-01-26
+### Bonus: Survival analysis
+
+### Back-transformation of estimated β parameters into the λ metric 
+### See equation (4) in manuscript
+est_shape <- 37.85
+est_scaleA <- exp(fixef(fit_1)[1, 1]) / gamma(1 + 1/est_shape)
+est_scaleB <- exp(fixef(fit_1)[2, 1]) / gamma(1 + 1/est_shape)
+est_scaleC <- exp(fixef(fit_1)[3, 1]) / gamma(1 + 1/est_shape)
+est_scaleD <- exp(fixef(fit_1)[4, 1]) / gamma(1 + 1/est_shape)
+est_scaleE <- exp(fixef(fit_1)[5, 1]) / gamma(1 + 1/est_shape)
+
+ll_scaleA <- exp(fixef(fit_1)[1, 3]) / gamma(1 + 1/est_shape)
+ll_scaleB <- exp(fixef(fit_1)[2, 3]) / gamma(1 + 1/est_shape)
+ll_scaleC <- exp(fixef(fit_1)[3, 3]) / gamma(1 + 1/est_shape)
+ll_scaleD <- exp(fixef(fit_1)[4, 3]) / gamma(1 + 1/est_shape)
+ll_scaleE <- exp(fixef(fit_1)[5, 3]) / gamma(1 + 1/est_shape)
+
+hh_scaleA <- exp(fixef(fit_1)[1, 4]) / gamma(1 + 1/est_shape)
+hh_scaleB <- exp(fixef(fit_1)[2, 4]) / gamma(1 + 1/est_shape)
+hh_scaleC <- exp(fixef(fit_1)[3, 4]) / gamma(1 + 1/est_shape)
+hh_scaleD <- exp(fixef(fit_1)[4, 4]) / gamma(1 + 1/est_shape)
+hh_scaleE <- exp(fixef(fit_1)[5, 4]) / gamma(1 + 1/est_shape)
+
+### Get survival functions
+### See equation (2) in manuscript
+est <-
+  data.frame(days = seq(0, 30, 0.001)) %>%
+  mutate(est_SA = exp(-(days/est_scaleA)^est_shape)) %>%
+  mutate(est_SB = exp(-(days/est_scaleB)^est_shape)) %>%
+  mutate(est_SC = exp(-(days/est_scaleC)^est_shape)) %>%
+  mutate(est_SD = exp(-(days/est_scaleD)^est_shape)) %>%
+  mutate(est_SE = exp(-(days/est_scaleE)^est_shape))
+
+ll <-
+  data.frame(days = seq(0, 30, 0.001)) %>%
+  mutate(ll_SA = exp(-(days/ll_scaleA)^est_shape)) %>%
+  mutate(ll_SB = exp(-(days/ll_scaleB)^est_shape)) %>%
+  mutate(ll_SC = exp(-(days/ll_scaleC)^est_shape)) %>%
+  mutate(ll_SD = exp(-(days/ll_scaleD)^est_shape)) %>%
+  mutate(ll_SE = exp(-(days/ll_scaleE)^est_shape))
+
+hh <-
+  data.frame(days = seq(0, 30, 0.001)) %>%
+  mutate(hh_SA = exp(-(days/hh_scaleA)^est_shape)) %>%
+  mutate(hh_SB = exp(-(days/hh_scaleB)^est_shape)) %>%
+  mutate(hh_SC = exp(-(days/hh_scaleC)^est_shape)) %>%
+  mutate(hh_SD = exp(-(days/hh_scaleD)^est_shape)) %>%
+  mutate(hh_SE = exp(-(days/hh_scaleE)^est_shape))
+
+### Get hazard functions
+### See equation (3) in manuscript
+est_hazard <-
+  data.frame(days = seq(0, 20, 0.001)) %>%
+  mutate(est_SA = (est_shape/est_scaleA) * (days/est_scaleA)^(est_shape - 1)) %>%
+  mutate(est_SA = est_SA / max(est_SA)) %>%
+  mutate(est_SB = (est_shape/est_scaleB) * (days/est_scaleB)^(est_shape - 1)) %>%
+  mutate(est_SB = est_SB / max(est_SB)) %>%
+  mutate(est_SC = (est_shape/est_scaleC) * (days/est_scaleC)^(est_shape - 1)) %>%
+  mutate(est_SC = est_SC / max(est_SC)) %>%
+  mutate(est_SD = (est_shape/est_scaleD) * (days/est_scaleD)^(est_shape - 1)) %>%
+  mutate(est_SD = est_SD / max(est_SD)) %>%
+  mutate(est_SE = (est_shape/est_scaleE) * (days/est_scaleE)^(est_shape - 1)) %>% 
+  mutate(est_SE = est_SE / max(est_SE)) 
+```
+
+### BM1 - Plot Bayesian posteriors showing the effect size (Figure 5D):
+
+```{r message=FALSE, warning=FALSE}
+### Plot the full posterior distributions
+post <-
+  as_draws_df(fit_1)  %>% 
+  pivot_longer(starts_with("b_")) %>%
+  group_by(.draw)  %>%
+  mutate(value2 = value + value[name == "b_Intercept"]) %>%    
+    mutate(value2 = case_when(
+           value2 == value2[name == "b_Intercept"] ~ value[name == "b_Intercept"], 
+           TRUE ~ value2  # Keep other values unchanged
+  )) %>%
+  mutate(days = qweibull(p = .5, shape, scale = exp(value2) / gamma( 1 + 1/shape))) %>%
+  mutate(days_diff = days - days[name == "b_Intercept" ])
+
+(g1 <-
+  post %>%
+  ggplot(aes(x = days, y = name)) +
+  stat_halfeye(aes(fill = after_stat(level)),    # area under curve colors
+               point_interval = mean_qi,         # circle = mean + quantile intervals
+               .width = c(0.67, .89, 1),         # areas under curve
+               slab_color = "#000000",           # posterior curve color
+               slab_linewidth = 0.7,
+               height = 3) +
+               stat_spike(at = c(mean)) +
+  scale_fill_brewer(type = "seq",                # collor pallete - area under curve
+                    palette = "Greys",
+                    direction = 1,
+                    aesthetics = "fill") +
+  scale_colour_manual(values = c("#000000")) +   # posterior curve color (must be here)
+  labs(x="Time until 50% of mice experienced wound closure") +
+  labs(y="") +
+  scale_x_continuous(limits = c(11, 22),
+                     breaks = (c(10, 12, 14, 16, 18, 20, 22))) +
+  theme(axis.ticks.y = element_blank()) +
+  theme(legend.position="none", plot.title = element_text(size=10),
+  aspect.ratio = 0.8,
+  plot.margin = margin(1, 1, 1, 1, "cm"),
+  axis.text=element_text(size=10),
+  axis.title=element_text(size=10),
+  plot.background = element_rect(fill='transparent', color=NA),
+  panel.border = element_rect(colour = "black", fill=NA, size=0.5),
+  panel.grid.major = element_line(color = "grey", size = 0.5),
+  panel.background = element_rect(fill = "white", colour = "white"),
+  legend.background = element_rect(fill='transparent'))
+)
+
+(g2 <-
+  post %>%
+    filter(name != "b_Intercept") %>%
+  ggplot(aes(x = days_diff, y = name)) +
+  stat_halfeye(aes(fill = after_stat(level)),    # area under curve colors
+               point_interval = mean_qi,         # circle = mean + quantile intervals
+               .width = c(.89),         # areas under curve
+               slab_color = "#000000",           # posterior curve color
+               slab_linewidth = 0.7,
+               height = 3) +
+               stat_spike(at = c(mean)) +
+  scale_fill_brewer(type = "seq",                # collor pallete - area under curve
+                    palette = "Greys",
+                    direction = 1,
+                    aesthetics = "fill") +
+  scale_colour_manual(values = c("#000000")) +   # posterior curve color (must be here)
+  labs(x="Time until 50% of mice experienced wound closure") +
+  labs(y="") +
+  scale_x_continuous(limits = c(-9, 3),
+                     breaks = (c(-8, -6, -4, -2, 0, 2)))  +
+  theme(axis.ticks.y = element_blank()) +
+  theme(legend.position="none", plot.title = element_text(size=10),
+  aspect.ratio = 0.8,
+  plot.margin = margin(1, 1, 1, 1, "cm"),
+  axis.text=element_text(size=10),
+  axis.title=element_text(size=10),
+  plot.background = element_rect(fill='transparent', color=NA),
+  panel.border = element_rect(colour = "black", fill=NA, size=0.5),
+  panel.grid.major = element_line(color = "grey", size = 0.5),
+  panel.background = element_rect(fill = "white", colour = "white"),
+  legend.background = element_rect(fill='transparent'))
+)
+
+(g3 <-
+  post %>%
+  filter(name != "b_Intercept") %>%
+  ggplot(aes(x = days_diff, y = name)) +
+  stat_gradientinterval(aes(fill = after_stat(level)),    # area under curve colors
+               point_interval = mean_qi,         # circle = mean + quantile intervals
+               .width = c(0.67, .89, 0.99),         # areas under curve
+               slab_color = "#000000",           # posterior curve color
+               slab_linewidth = 0.7,
+               height = 3,
+               scale = 0.2) +
+  scale_fill_brewer(type = "seq",                # collor pallete - area under curve
+                    palette = "Greys",
+                    direction = 1,
+                    aesthetics = "fill") +
+  scale_colour_manual(values = c("#000000")) +   # posterior curve color (must be here)
+  labs(x="Time until 50% of mice experienced wound closure") +
+  labs(y="") +
+  scale_x_continuous(limits = c(-9, 3),
+                     breaks = (c(-8, -6, -4, -2, 0, 2)))  +
+  theme(axis.ticks.y = element_blank()) +
+  theme(legend.position="none", plot.title = element_text(size=10),
+  aspect.ratio = 0.8,
+  plot.margin = margin(1, 1, 1, 1, "cm"),
+  axis.text=element_text(size=10),
+  axis.title=element_text(size=10),
+  plot.background = element_rect(fill='transparent', color=NA),
+  panel.border = element_rect(colour = "black", fill=NA, size=0.5),
+  panel.grid.major = element_line(color = "grey", size = 0.5),
+  panel.background = element_rect(fill = "white", colour = "white"),
+  legend.background = element_rect(fill='transparent'))
+)
+
+```
+
+### GLUCOSE LEVEL - Figure 5C
+
+Data were taken from "wound healing" dataset (file *Figure_5.txt* from
+the GitHub repository (see link
+<https://github.com/KindermannMarek/Topical-siRNA-therapy-1>).
+
+Glucose data:
+
+```{r}
+#create animal ID
+data <- data.frame(data, seq(1, 15, 1))
+data <- rename(data, animal_ID = seq.1..15..1.)
+
+#crete new dataframe
+data2 <- data.frame(data$glyc_pre, data$glyc_post, data$group_ID, data$animal_ID, data$status)
+data2 <-
+  data2 %>%
+  pivot_longer(starts_with("data.glyc")) %>%
+  rename(group_ID = data.group_ID,
+         animal_ID = data.animal_ID) %>%
+  filter(data.status != "healthy")
+
+
+data2_check <-
+  data2 %>%
+  filter(name != "data.glyc_post")
+
+```
+
+Blood glucose level is expected to be log-normaly distributed as well as
+other biological parameters like weight, triglyceride concentration atd.
+The prior scale follows the link function. The log-normal family has the
+identity link in brms =\> prior on usual scale (not log-scale).
+
+### BM2
+
+```{r message=FALSE, warning=FALSE, cache=TRUE}
+set.seed = 17
+
+data2$name <- as.factor(data2$name)
+data2$name <- relevel(data2$name, ref = "data.glyc_pre")
+
+data2$group_ID <- as.factor(data2$group_ID)
+data2$animal_ID <- as.factor(data2$animal_ID)
+data2$data.status <- as.factor(data2$data.status)
+
+data2$value  <- as.numeric(data2$value)
+
+bform_2 <- bf(value ~ 1 + name)
+prior_2 <- c(prior(normal(0, 12), class = b))
+
+fit_2 <- brm(bform_2,
+            data = data2,
+            family = brmsfamily("lognormal"),
+            prior = prior_2,
+            warmup = 2000,
+            iter = 5000,
+            chains = 4,
+            cores = 4,
+            control = list(adapt_delta = 0.95, max_treedepth = 15))
+            fit_2 <- add_criterion(fit_2, "loo")
+            
+summary(fit_2)
+conditional_effects(fit_2) 
+pp_check(fit_2, ndraws = 50)
+bayes_R2(fit_2)
+loo(fit_2, 'moment_match = TRUE')
+plot(loo(fit_2, 'moment_match = TRUE'))
+
+```
+
+Include info about *animal_ID* (repeated measurements). It is good to
+note that it does not make sense to incorporate the *group_ID* to this
+model (the animals were divided in three groups based on the reached
+glucose level - the factor *group_ID* was created artificially -
+assignment of *group_ID*).
+
+## BM2.1
+
+```{r}
+fit_2.1 <- update(fit_2, value ~ 1 + name + (1 | animal_ID),
+                  newdata = data2)
+
+summary(fit_2.1)
+conditional_effects(fit_2.1) 
+pp_check(fit_2.1, ndraws = 50)
+bayes_R2(fit_2.1)
+loo(fit_2.1, 'moment_match = TRUE')
+plot(loo(fit_2.1, 'moment_match = TRUE'))
+
+loo(fit_2, fit_2.1)
+```
+
+Using leave one out cross-validation, we found that grouping variable
+*animal_ID* in the form of random variable did not improve the model.
+Therefore, we proceeded with *BM2*.
+
+## BM2.2
+
+Prior sensitivity analysis for BM2: Try to check the more narrower
+prior.
+
+```{r message=FALSE, warning=FALSE, cache=TRUE}
+### Bayesian model
+set.seed = 17
+
+data2$name <- as.factor(data2$name)
+data2$name <- relevel(data2$name, ref = "data.glyc_pre")
+
+data2$value  <- as.numeric(data2$value)
+
+bform_2.2 <- bf(value ~ 1 + name)
+prior_2.2 <- c(prior(normal(0, 2), class = b))
+
+fit_2.2 <- brm(bform_2.2,
+            data = data2,
+            family = brmsfamily("lognormal"),
+            prior = prior_2.2,
+            warmup = 2000,
+            iter = 5000,
+            chains = 4,
+            cores = 4,
+            control = list(adapt_delta = 0.95, max_treedepth = 15))
+            fit_2.2 <- add_criterion(fit_2.2, "loo")
+            
+summary(fit_2.2)
+conditional_effects(fit_2.2) 
+pp_check(fit_2.2, ndraws = 50)
+bayes_R2(fit_2.2)
+loo(fit_2.2, 'moment_match = TRUE')
+plot(loo(fit_2.2, 'moment_match = TRUE'))
+
+```
+
+## BM2.3
+
+Prior sensitivity analysis: Try to check the more wider prior.
+
+```{r message=FALSE, warning=FALSE, cache=TRUE}
+### Bayesian model
+set.seed = 17
+
+data2$name <- as.factor(data2$name)
+data2$name <- relevel(data2$name, ref = "data.glyc_pre")
+
+data2$value  <- as.numeric(data2$value)
+
+bform_2.3 <- bf(value ~ 1 + name)
+prior_2.3 <- c(prior(normal(0, 20), class = b))
+
+fit_2.3 <- brm(bform_2.3,
+            data = data2,
+            family = brmsfamily("lognormal"),
+            prior = prior_2.3,
+            warmup = 2000,
+            iter = 5000,
+            chains = 4,
+            cores = 4,
+            control = list(adapt_delta = 0.95, max_treedepth = 15))
+            fit_2.3 <- add_criterion(fit_2.3, "loo")
+            
+summary(fit_2.3)
+conditional_effects(fit_2.3) 
+pp_check(fit_2.3, ndraws = 50)
+bayes_R2(fit_2.3)
+loo(fit_2.3, 'moment_match = TRUE')
+plot(loo(fit_2.3, 'moment_match = TRUE'))
+
+```
+
+Both sensitivity analysis seem to be fine (there is no substantial
+change in the estimated parameters). The results are consistent with the
+proposed priors.
+
+BM2 - plot the effect size (Figure 5C):
+
+```{r warning=FALSE, message = FALSE, echo = FALSE}
+### data table
+pred2 <- predictions(fit_2,
+                    type = "response",
+                    re_formula = NA,
+                    conf_level = 0.89) %>%
+  posterior_draws() %>%
+  group_by(drawid) %>%
+  distinct(draw, .keep_all = TRUE) %>%  ### keep only unique draws and keep all variables untouched  
+  mutate(diff = draw[name == "data.glyc_post"] - draw[name == "data.glyc_pre"])  %>%
+  distinct(diff, .keep_all = TRUE)
+
+p <-
+pred2  %>%
+      ggplot(aes(x = diff,
+                 alpha = 0.8)) +
+        stat_halfeye(aes(fill = after_stat(level)),    # area under curve colors
+               point_interval = mean_qi,         # circle = mean + quantile intervals
+               .width = c(.89),         # areas under curve
+               slab_color = "#000000",           # posterior curve color
+               slab_linewidth = 0.7,
+               height = 3) +
+               stat_spike(at = c(mean)) +
+  scale_fill_brewer(type = "seq",                # collor pallete - area under curve
+                    palette = "Greys",
+                    direction = 1,
+                    aesthetics = "fill") +
+  theme_bw() +
+  theme(legend.position = "none") +
+  geom_vline(xintercept = 0, color = "red") +
+  labs(x = "estimated ddCt", y = "")
+p
+
+```
+
+BM2 - plot the final effect size:
+
+```{r warning=FALSE, message = FALSE, echo = FALSE}
+### data table
+ate2  <- comparisons(
+ fit_2,
+ variables = list(name = "reference"),
+ by = c("name"),
+ re_formula = NA, ### fixed effects only
+ type = "response", ### posterior_epred methods
+) %>%
+  posteriordraws()
+
+
+data_filt <-
+  data %>%
+  filter(status != "healthy")
+
+p <-
+      ggplot() +
+        stat_halfeye(data = ate2,
+                    aes(x = draw,
+                         y = contrast,
+                         alpha = 0.8,
+                         fill = after_stat(level)),    # area under curve colors
+               point_interval = mean_qi,         # circle = mean + quantile intervals
+               .width = c(.89),         # areas under curve
+               slab_color = "#000000",           # posterior curve color
+               slab_linewidth = 0.7,
+               height = 3) +
+               stat_spike(at = c(mean)) +
+  scale_fill_brewer(type = "seq",                # collor pallete - area under curve
+                    palette = "Greys",
+                    direction = 1,
+                    aesthetics = "fill") +
+  geom_point(data = data_filt, 
+             mapping = aes(x = diff, y = group_ID),
+             position = "jitter",
+             shape = 21) + 
+  theme_bw() +
+  theme(legend.position = "none") +
+  geom_vline(xintercept = 0, color = "red") +
+  labs(x = "estimated ddCt", y = "")
+p
+
+```
+
+### qPCR (in vitro) - Figure 3B
+
+### Load data:
+
+File *Figure_4B.txt* from the GitHub repository contains the source data
+(see link <https://github.com/KindermannMarek/Topical-siRNA-therapy-1>).
+
+```{r}
+library(readxl)
+### Upload (!Use your own path to the data table! Load file *Figure_4B.txt* from the repository.)
+qpcrinvitro <- read_excel("c:\\Users\\KindermannM\\Documents\\OneDrive_hotmail_gmail\\4_biomedical_center\\R2\\1_uochb\\Projects\\HPMA_patent\\data\\qPCR_invitro\\qpcrinvitro28102024.xlsx", 
+    sheet = "Sheet1")
+
+```
+
+Data wrangling:
+
+```{r}
+qpcrinvitro <-
+  qpcrinvitro %>%
+  mutate(dct = ct_TBP - ct_MMP9)
+```
+
+The study design incorporates a nested structure with technical
+replicates per experiment. This hierarchical arrangement is reflected in
+the multilevel model by nesting technical replicates within experiment.
+The model accounts for potential variability in gene expression both
+between experiments and among technical replicates within the
+experiment.
+
+Coefficients *𝛽* are centered around 0; standard deviation (sd) of this
+prior was estimated as sd = 2 × standard deviation(dCt); prior(normal(0,
+11)).\
+
+### BM3
+
+random intercept for a technical replicate nested in a given experiment:
+
+```{r , message=FALSE, warning=FALSE, cache=TRUE}
+### Bayesian model
+set.seed = 17
+
+qpcrinvitro$sample <- as.factor(qpcrinvitro$sample)
+qpcrinvitro$ct_TBP <- as.numeric(qpcrinvitro$ct_TBP)
+qpcrinvitro$ct_MMP9 <- as.numeric(qpcrinvitro$ct_MMP9)
+qpcrinvitro$techrep <- as.factor(qpcrinvitro$techrep )
+qpcrinvitro$exp <- as.factor(qpcrinvitro$exp )
+
+qpcrinvitro$sample <- relevel(qpcrinvitro$sample, ref = "ctrl")
+
+
+bform_3 <- bf(dct ~ 1 + sample + (1 | exp / techrep))
+prior_3 <- c(prior(normal(0, 11), class = b, coef = "samplenf"),
+             prior(normal(0, 11), class = b, coef = "samplesiR"))
+
+fit_3 <- brm(bform_3,
+            data = qpcrinvitro,
+            family = brmsfamily("normal"),
+            prior = prior_3,
+            warmup = 2000,
+            iter = 5000,
+            chains = 4,
+            cores = 4,
+            control = list(adapt_delta = 0.95, max_treedepth = 15))
+            fit_3 <- add_criterion(fit_3, "loo")
+            
+summary(fit_3)
+conditional_effects(fit_3) 
+pp_check(fit_3, ndraws = 50)
+bayes_R2(fit_3)
+loo(fit_3, 'moment_match = TRUE')
+plot(loo(fit_3, 'moment_match = TRUE'))
+
+
+library(emmeans)
+fixef(fit_3) ### population-level (fixed) effects
+ranef(fit_3) ### group-level (random) effects
+coef(fit_3)  ### extract combined coefficients
+
+
+```
+
+### BM3.1
+
+intercept (random intercept for a technical replicate nested in a given
+experiment) and slope (random slope for the experiment) are calculated
+independently - without any assumed correlation between them (not
+calculated in the same grouping):
+
+```{r , message=FALSE, warning=FALSE, cache=TRUE}
+### Bayesian model
+set.seed = 17
+
+qpcrinvitro$sample <- as.factor(qpcrinvitro$sample)
+qpcrinvitro$ct_TBP <- as.numeric(qpcrinvitro$ct_TBP)
+qpcrinvitro$ct_MMP9 <- as.numeric(qpcrinvitro$ct_MMP9)
+qpcrinvitro$techrep <- as.factor(qpcrinvitro$techrep )
+qpcrinvitro$exp <- as.factor(qpcrinvitro$exp )
+
+qpcrinvitro$sample <- relevel(qpcrinvitro$sample, ref = "ctrl")
+
+
+bform_3.1 <- bf(dct ~ 1 + sample + (1 | exp / techrep) + (0 + sample | exp))
+prior_3.1 <- c(prior(normal(0, 11), class = b, coef = "samplenf"),
+             prior(normal(0, 11), class = b, coef = "samplesiR"))
+
+fit_3.1 <- brm(bform_3.1,
+            data = qpcrinvitro,
+            family = brmsfamily("normal"),
+            prior = prior_3.1,
+            warmup = 2000,
+            iter = 5000,
+            chains = 4,
+            cores = 4,
+            control = list(adapt_delta = 0.95, max_treedepth = 15))
+            fit_3.1 <- add_criterion(fit_3.1, "loo")
+            
+summary(fit_3.1)
+conditional_effects(fit_3.1) 
+pp_check(fit_3.1, ndraws = 50)
+bayes_R2(fit_3.1)
+loo(fit_3.1, 'moment_match = TRUE')
+plot(loo(fit_3.1, 'moment_match = TRUE'))
+
+```
+
+### BM3.2
+
+random intercept and random slope are calculated in the same grouping:
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+### Bayesian model
+set.seed = 17
+
+qpcrinvitro$sample <- as.factor(qpcrinvitro$sample)
+qpcrinvitro$ct_TBP <- as.numeric(qpcrinvitro$ct_TBP)
+qpcrinvitro$ct_MMP9 <- as.numeric(qpcrinvitro$ct_MMP9)
+qpcrinvitro$techrep <- as.factor(qpcrinvitro$techrep )
+qpcrinvitro$exp <- as.factor(qpcrinvitro$exp )
+
+qpcrinvitro$sample <- relevel(qpcrinvitro$sample, ref = "ctrl")
+
+
+bform_3.2 <- bf(dct ~ 1 + sample + (1 + sample | exp / techrep))
+prior_3.2 <- c(prior(normal(0, 11), class = b, coef = "samplenf"),
+             prior(normal(0, 11), class = b, coef = "samplesiR"))
+
+fit_3.2 <- brm(bform_3.2,
+            data = qpcrinvitro,
+            family = brmsfamily("normal"),
+            prior = prior_3.2,
+            warmup = 2000,
+            iter = 5000,
+            chains = 4,
+            cores = 4,
+            control = list(adapt_delta = 0.95, max_treedepth = 15))
+            fit_3.2 <- add_criterion(fit_3.2, "loo")
+            
+summary(fit_3.2)
+conditional_effects(fit_3.2) 
+pp_check(fit_3.2, ndraws = 50)
+bayes_R2(fit_3.2)
+loo(fit_3.2, 'moment_match = TRUE')
+plot(loo(fit_3.2, 'moment_match = TRUE'))
+
+```
+
+### BM3.5
+
+random intercept for the experiment only:
+
+```{r , message=FALSE, warning=FALSE, cache=TRUE}
+### Bayesian model
+set.seed = 17
+
+qpcrinvitro$sample <- as.factor(qpcrinvitro$sample)
+qpcrinvitro$ct_TBP <- as.numeric(qpcrinvitro$ct_TBP)
+qpcrinvitro$ct_MMP9 <- as.numeric(qpcrinvitro$ct_MMP9)
+qpcrinvitro$techrep <- as.factor(qpcrinvitro$techrep )
+qpcrinvitro$exp <- as.factor(qpcrinvitro$exp )
+
+qpcrinvitro$sample <- relevel(qpcrinvitro$sample, ref = "ctrl")
+
+
+bform_3.5 <- bf(dct ~ 1 + sample + (1 | exp))
+prior_3.5 <- c(prior(normal(0, 11), class = b, coef = "samplenf"),
+             prior(normal(0, 11), class = b, coef = "samplesiR"))
+
+fit_3.5 <- brm(bform_3.5,
+            data = qpcrinvitro,
+            family = brmsfamily("normal"),
+            prior = prior_3.5,
+            warmup = 2000,
+            iter = 5000,
+            chains = 4,
+            cores = 4,
+            control = list(adapt_delta = 0.95, max_treedepth = 15))
+            fit_3.5 <- add_criterion(fit_3.5, "loo")
+            
+summary(fit_3.5)
+conditional_effects(fit_3.5) 
+pp_check(fit_3.5, ndraws = 50)
+bayes_R2(fit_3.5)
+loo(fit_3.5, 'moment_match = TRUE')
+plot(loo(fit_3.5, 'moment_match = TRUE'))
+
+```
+
+### BM3.6
+
+model with the fixed factor only:
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+### Bayesian model
+set.seed = 17
+
+qpcrinvitro$sample <- as.factor(qpcrinvitro$sample)
+qpcrinvitro$ct_TBP <- as.numeric(qpcrinvitro$ct_TBP)
+qpcrinvitro$ct_MMP9 <- as.numeric(qpcrinvitro$ct_MMP9)
+qpcrinvitro$techrep <- as.factor(qpcrinvitro$techrep )
+qpcrinvitro$exp <- as.factor(qpcrinvitro$exp )
+
+qpcrinvitro$sample <- relevel(qpcrinvitro$sample, ref = "ctrl")
+
+
+bform_3.6 <- bf(dct ~ 1 + sample )
+prior_3.6 <- c(prior(normal(0, 11), class = b, coef = "samplenf"),
+             prior(normal(0, 11), class = b, coef = "samplesiR"))
+
+fit_3.6 <- brm(bform_3.6,
+            data = qpcrinvitro,
+            family = brmsfamily("normal"),
+            prior = prior_3.6,
+            warmup = 2000,
+            iter = 5000,
+            chains = 4,
+            cores = 4,
+            control = list(adapt_delta = 0.95, max_treedepth = 15))
+            fit_3.6 <- add_criterion(fit_3.6, "loo")
+            
+summary(fit_3.6)
+conditional_effects(fit_3.6) 
+pp_check(fit_3.6, ndraws = 50)
+bayes_R2(fit_3.6)
+loo(fit_3.6, 'moment_match = TRUE')
+plot(loo(fit_3.6, 'moment_match = TRUE'))
+
+```
+
+Comparison of models. The results of the cross-validation show that
+models BM3, BM3.1 and BM3.2 are comparable and outperform models BM3.5
+and BM3.6.
+
+Modeling the random slope for models BM3.1 and BM3.2 represents
+additional complexity compared to model BM3 (BM3 includes only random
+intercept) which does not bring noticeable improvement. Thus, let's
+stick to our initial expectation (model BM3 model).
+
+```{r}
+loo(fit_3, fit_3.1, fit_3.2, fit_3.5, fit_3.6)
+```
+
+Let's take a look at the group-level estimates (just out of interest):
+
+```{r}
+pred <- predictions(fit_3,
+    newdata = datagrid(sample = c("ctrl", "nf", "siR"), 
+                       exp = unique),
+    re_formula = ~(1|exp / techrep),
+    allow_new_levels = TRUE,
+    type = "response", ### posterior_epred method
+    by = c("sample", "exp")) 
+
+pred <-  posterior_draws(pred)
+pred %>%
+        ggplot(aes(y = draw,
+                   x = sample,
+                   alpha = 1)) +
+        # stat_halfeye() +
+  stat_pointinterval(.width = c(0.95),
+                    point_interval = "median_qi")+
+  theme_bw() +
+  theme(legend.position = "none") +
+  facet_grid(~exp) + 
+  labs(x = "dCt", y = "treatment")
+
+```
+
+Plot the final effect size (population-level estimates). Let's try
+different implementations first to see that everything is ok:
+
+```{r}
+
+### [1]
+conditional_effects(fit_3, conditions = NULL, re_formula = NA, method = "posterior_epred", prob = 0.89, ask = FALSE)
+
+### [2]
+plot_predictions(fit_3, condition = "sample", type = "response", re_formula = NA, conf_level = 0.89)
+
+### [3]
+pred1 <- predictions(fit_3,
+                    type = "response",
+                    re_formula = NA,
+                    conf_level = 0.89)
+pred1 <- posterior_draws(pred1)
+ggplot(pred1, aes(y = draw, x = sample)) +
+    stat_pointinterval(.width = c(0.89))
+
+```
+
+Plot the full posterior distributions (Figure 4B):
+
+```{r}
+pred1 <- predictions(fit_3,
+                     type = "response",
+                     re_formula = NA,
+                     conf_level = 0.89)
+pred1 <- posterior_draws(pred1)
+ggplot(pred1, aes(y = draw, x = sample)) +
+stat_pointinterval(.width = c(0.89))
+
+pred1_compare <-
+  pred1 %>%
+  group_by(drawid, exp, sample) %>%
+  distinct(draw, .keep_all = TRUE) %>%
+  ungroup() %>%
+  group_by(drawid, exp) %>%
+  mutate(diff = draw - draw[sample == "ctrl"]) %>%
+  filter(sample != "ctrl") %>%
+  ungroup()
+
+
+pred1_compare %>%
+      ggplot(aes(x = diff,
+                 y = sample,
+                 alpha = 0.8)) +
+        stat_halfeye(aes(fill = after_stat(level)),    # area under curve colors
+               point_interval = mean_qi,         # circle = mean + quantile intervals
+               .width = c(.89),         # areas under curve
+               slab_color = "#000000",           # posterior curve color
+               slab_linewidth = 0.7,
+               height = 3) +
+               stat_spike(at = c(mean)) +
+  scale_fill_brewer(type = "seq",                # collor pallete - area under curve
+                    palette = "Greys",
+                    direction = 1,
+                    aesthetics = "fill") +
+  theme_bw() +
+  theme(legend.position = "none") +
+  geom_vline(xintercept = 0, color = "red") +
+  labs(x = "estimated ddCt", y = "")
+
+
+
+```
+
+### BM3.7
+
+Prior sensitivity analysis for BM3: Try to check the more narrower
+prior.
+
+```{r , message=FALSE, warning=FALSE, cache=TRUE}
+### Bayesian model
+set.seed = 17
+
+
+bform_3.7 <- bf(dct ~ 1 + sample + (1 | exp / techrep))
+prior_3.7 <- c(prior(normal(0, 2), class = b, coef = "samplenf"),
+             prior(normal(0, 2), class = b, coef = "samplesiR"))
+
+fit_3.7 <- brm(bform_3.7,
+            data = qpcrinvitro,
+            family = brmsfamily("normal"),
+            prior = prior_3.7,
+            warmup = 2000,
+            iter = 5000,
+            chains = 4,
+            cores = 4,
+            control = list(adapt_delta = 0.95, max_treedepth = 15))
+            fit_3.7 <- add_criterion(fit_3.7, "loo")
+            
+summary(fit_3.7)
+conditional_effects(fit_3.7) 
+pp_check(fit_3.7, ndraws = 50)
+bayes_R2(fit_3.7)
+loo(fit_3.7, 'moment_match = TRUE')
+plot(loo(fit_3.7, 'moment_match = TRUE'))
+
+
+library(emmeans)
+fixef(fit_3.7) ### population-level (fixed) effects
+ranef(fit_3.7) ### group-level (random) effects
+coef(fit_3.7)  ### extract combined coefficients
+
+
+```
+
+### BM3.8
+
+Prior sensitivity analysis for BM3: Try to check the more wider prior.
+
+```{r , message=FALSE, warning=FALSE, cache=TRUE}
+### Bayesian model
+set.seed = 17
+
+
+bform_3.8 <- bf(dct ~ 1 + sample + (1 | exp / techrep))
+prior_3.8 <- c(prior(normal(0, 20), class = b, coef = "samplenf"),
+             prior(normal(0, 20), class = b, coef = "samplesiR"))
+
+fit_3.8 <- brm(bform_3.8,
+            data = qpcrinvitro,
+            family = brmsfamily("normal"),
+            prior = prior_3.8,
+            warmup = 2000,
+            iter = 5000,
+            chains = 4,
+            cores = 4,
+            control = list(adapt_delta = 0.95, max_treedepth = 15))
+            fit_3.8 <- add_criterion(fit_3.8, "loo")
+            
+summary(fit_3.8)
+conditional_effects(fit_3.8) 
+pp_check(fit_3.8, ndraws = 50)
+bayes_R2(fit_3.8)
+loo(fit_3.8, 'moment_match = TRUE')
+plot(loo(fit_3.8, 'moment_match = TRUE'))
+
+
+library(emmeans)
+fixef(fit_3.8) ### population-level (fixed) effects
+ranef(fit_3.8) ### group-level (random) effects
+coef(fit_3.8)  ### extract combined coefficients
+
+
+```
+
+Both sensitivity analysis seem to be fine (there is no substantial
+change in the estimated parameters). The results are consistent with the
+proposed priors.
